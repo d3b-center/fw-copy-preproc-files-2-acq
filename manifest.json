@@ -14,7 +14,7 @@
     },
     "gear-builder": {
       "category": "utility",
-      "image": "chop.flywheel.io/d3b-copy-proc-2-acq:0.0.0-1"
+      "image": "chop.flywheel.io/d3b-copy-proc-2-acq:0.0.1"
     }
   },
   "environment": {
@@ -32,11 +32,11 @@
       "read-only": true
     }
   },
-  "label": "Copy analysis files to the session.",
+  "label": "Rename & copy pre-proc files",
   "description": "This tool copies files ouput by the D3b-Ped-Processing-Pipeline gear to an acquisition container and renames them to include subject and session labels.",
   "license": "Apache-2.0",
   "maintainer": "D3b-TIRU <flywheel@d3b.center>",
   "name": "d3b-copy-proc-2-acq",
   "source": "https://github.com/d3b-center/fw-copy-proc-2-acq", 
-  "version": "0.0.0-1"
+  "version": "0.0.1"
 }
