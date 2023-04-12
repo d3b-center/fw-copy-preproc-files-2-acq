@@ -33,16 +33,9 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
     project_label = hierarchy['project_label']
     group_name = hierarchy['group']
 
-    # make the output location if it doesn't already exist
-    acq_label = 'processed'
-    try:
-        acq = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}/{acq_label}')
-    except:
-        ses = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}')
-        acq = ses.add_acquisition({'label':acq_label})
-
     # now look for the analysis gear to grab files from (within the same session)
     ses = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}')
+    ses = ses.reload()
     gear_name = 'd3b-ped-proc-pipeline-batch'
     match = get_matching_analysis(ses, gear_name)
     # if we have a matching gear, rename & copy the files to the acquisition container
@@ -78,8 +71,19 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
                     out_fname == []
                 # if we have the output file name, upload file to the acquisition
                 if out_fname == []:
-                    print(f'>>> ERROR: no mapping to rename the file name - {fname}')
+                    log.error(f'>>> ERROR: no mapping to rename the file name - {fname}')
+                    os.remove(fname)
                 else:
+                    # make the output location if it doesn't already exist
+                    acq_label = 'processed'
+                    try:
+                        acq = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}/{acq_label}')
+                    except:
+                        acq = ses.add_acquisition({'label':acq_label})
+                    # rename the file locally
                     os.rename(fname, out_fname)
-                    client.upload_file_to_acquisition(acq.id, out_fname)
+                    # upload the renamed file to the target acquisition
+                    fw.upload_file_to_acquisition(acq.id, out_fname)
                     log.info(f"Saved output file {out_fname}")
+    else:
+        log.error(f'>>> ERROR: found analysis containers but no completed runs for the gear - {gear_name}')
