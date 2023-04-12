@@ -7,6 +7,7 @@ import logging
 import os
 
 from fw_core_client import CoreClient
+from flywheel_gear_toolkit import GearToolkitContext
 
 from .run_level import get_analysis_run_level_and_hierarchy
 from .get_analysis import get_matching_analysis
