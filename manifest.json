@@ -1,0 +1,19 @@
+{
+  "name": "d3b-copy-proc-2-acq",
+  "label": "Copy analysis files to the session.",
+  "description": "This tool copies files ouput by the D3b-Ped-Processing-Pipeline gear to an acquisition container and renames them to include subject and session labels.",
+  "author": "Ariana Familiar",
+  "maintainer": "D3b-TIRU <flywheel@d3b.center>",
+  "source": "https://github.com/d3b-center/fw-copy-proc-2-acq", 
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "custom": {
+    "gear-builder": {
+      "category": "utility",
+      "image": "chop.flywheel.io/d3b-copy-proc-2-acq:0.0.0"
+    },
+    "flywheel": {
+      "suite": "D3b-TIRU"
+    }
+  }
+}
