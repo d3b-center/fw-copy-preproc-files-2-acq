@@ -4,7 +4,7 @@
 
 import logging
 
-from flywheel import ApiException
+# from flywheel import ApiException
 
 log = logging.getLogger(__name__)
 
@@ -50,9 +50,9 @@ def get_analysis_run_level_and_hierarchy(fw, destination_id):
                     if hierarchy["run_level"] == level:
                         hierarchy["run_label"] = container.label
 
-    except ApiException as err:
+    except:
         log.error(
-            f"The destination_id does not reference a valid analysis container.\n{err}"
+            f"The destination_id does not reference a valid analysis container."
         )
 
     log.info(f"Gear run level and hierarchy labels: {hierarchy}")

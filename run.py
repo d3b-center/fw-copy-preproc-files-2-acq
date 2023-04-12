@@ -14,7 +14,7 @@ def main(context: GearToolkitContext) -> None:  # pragma: no cover
     """Parse config and run."""
     fw = parse_config(context)
 
-    e_code = run(fw)
+    e_code = run(fw, context)
 
     sys.exit(e_code)
 

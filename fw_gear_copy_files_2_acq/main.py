@@ -14,14 +14,14 @@ from .get_analysis import get_matching_analysis
 log = logging.getLogger(__name__)
 
 
-def run(client: CoreClient):
+def run(client: CoreClient, gtk_context: GearToolkitContext):
     """Main entrypoint
 
     Args:
         client (CoreClient): Client to connect to API
     """
     # get the Flywheel hierarchy for the run
-    destination_id = client.destination["id"]
+    destination_id = gtk_context.destination["id"]
     hierarchy = get_analysis_run_level_and_hierarchy(client, destination_id)
     sub_label = hierarchy['subject_label']
     ses_label = hierarchy['session_label']
