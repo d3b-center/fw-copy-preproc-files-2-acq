@@ -85,5 +85,6 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
                     # upload the renamed file to the target acquisition
                     fw.upload_file_to_acquisition(acq.id, out_fname)
                     log.info(f"Saved output file {out_fname}")
+                    os.remove(out_fname)
     else:
         log.error(f'>>> ERROR: found analysis containers but no completed runs for the gear - {gear_name}')
