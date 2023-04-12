@@ -10,7 +10,7 @@ from . import __version__, pkg_name
 def parse_config(
     gear_context: GearToolkitContext,
 ) -> Tuple[dict, CoreClient]:
-    """Get nifti-file, and api-key as well as config options."""
+    """Get api-key as well as config options."""
     api_key_in = gear_context.get_input("api-key")
     fw = CoreClient(
         api_key=api_key_in.get("key"), client_name=pkg_name, client_version=__version__

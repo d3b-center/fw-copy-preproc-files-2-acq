@@ -9,7 +9,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-def get_analysis_run_level_and_hierarchy(fw, destination_id):
+def get_analysis_run_level_and_hierarchy(fw_core_client, destination_id):
     """Determine the level at which a job is running, given a destination
     Args:
         fw (gear_toolkit.GearToolkitContext.client): flywheel client
@@ -29,32 +29,19 @@ def get_analysis_run_level_and_hierarchy(fw, destination_id):
         "session_label": None,
     }
 
-    try:
+    destination = fw_core_client.get(destination_id)
+    if destination.container_type == "session":
+        log.error("The destination_id must reference a valid session container.")
 
-        destination = fw.get(destination_id)
+        hierarchy["run_level"] = destination.parent.type
+        hierarchy["group"] = destination.parents["group"]
 
-        if destination.container_type != "analysis":
-            log.error("The destination_id must reference an analysis container.")
-
-        else:
-
-            hierarchy["run_level"] = destination.parent.type
-            hierarchy["group"] = destination.parents["group"]
-
-            for level in ["project", "subject", "session"]:
-
-                if destination.parents[level]:
-                    container = fw.get(destination.parents[level])
-                    hierarchy[f"{level}_label"] = container.label
-
-                    if hierarchy["run_level"] == level:
-                        hierarchy["run_label"] = container.label
-
-    except:
-        log.error(
-            f"The destination_id does not reference a valid analysis container."
-        )
+        for level in ["project", "subject", "session"]:
+            if destination.parents[level]:
+                container = fw_core_client.get(destination.parents[level])
+                hierarchy[f"{level}_label"] = container.label
+                if hierarchy["run_level"] == level:
+                    hierarchy["run_label"] = container.label
 
     log.info(f"Gear run level and hierarchy labels: {hierarchy}")
-
     return hierarchy

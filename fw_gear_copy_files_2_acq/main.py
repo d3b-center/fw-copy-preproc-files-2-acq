@@ -8,18 +8,22 @@ import os
 
 from fw_core_client import CoreClient
 from flywheel_gear_toolkit import GearToolkitContext
+import flywheel
 
 from .run_level import get_analysis_run_level_and_hierarchy
 from .get_analysis import get_matching_analysis
 
 log = logging.getLogger(__name__)
 
+fw_context = flywheel.GearContext()
+fw = fw_context.client
 
 def run(client: CoreClient, gtk_context: GearToolkitContext):
     """Main entrypoint
 
     Args:
         client (CoreClient): Client to connect to API
+        gtk_context (GearToolkitContext)
     """
     # get the Flywheel hierarchy for the run
     destination_id = gtk_context.destination["id"]
@@ -32,13 +36,13 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
     # make the output location if it doesn't already exist
     acq_label = 'processed'
     try:
-        acq = client.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}/{acq_label}')
+        acq = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}/{acq_label}')
     except:
-        ses = client.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}')
+        ses = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}')
         acq = ses.add_acquisition({'label':acq_label})
 
-    # now look for the analysis gear to grab files from
-    ses = client.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}')
+    # now look for the analysis gear to grab files from (within the same session)
+    ses = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}')
     gear_name = 'd3b-ped-proc-pipeline-batch'
     match = get_matching_analysis(ses, gear_name)
     # if we have a matching gear, rename & copy the files to the acquisition container
