@@ -27,7 +27,7 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
     """
     # get the Flywheel hierarchy for the run
     destination_id = gtk_context.destination["id"]
-    hierarchy = get_analysis_run_level_and_hierarchy(client, destination_id)
+    hierarchy = get_analysis_run_level_and_hierarchy(gtk_context.client, destination_id)
     sub_label = hierarchy['subject_label']
     ses_label = hierarchy['session_label']
     project_label = hierarchy['project_label']
