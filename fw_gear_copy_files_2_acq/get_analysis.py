@@ -1,8 +1,5 @@
 """Handle pixelmed function."""
 import logging
-# import os
-# import subprocess
-# from pathlib import Path
 
 log = logging.getLogger(__name__)
 

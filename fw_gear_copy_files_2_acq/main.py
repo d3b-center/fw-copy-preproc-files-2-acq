@@ -1,9 +1,5 @@
 """Main module."""
-# import gzip
 import logging
-# import tempfile
-# from contextlib import ExitStack
-# from pathlib import Path
 import os
 
 from fw_core_client import CoreClient
