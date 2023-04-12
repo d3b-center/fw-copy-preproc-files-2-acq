@@ -14,7 +14,6 @@ repository = "https://github.com/d3b-center/fw-copy-proc-2-acq"
 [tool.poetry.dependencies]
 python = "^3.9"
 flywheel-gear-toolkit = "^0.5"
-backoff = "^1.11.1"
 fw-core-client = "^1.0.2"
 fw-file = "^1.0.3"
 flywheel-sdk = "^16.16.7"
