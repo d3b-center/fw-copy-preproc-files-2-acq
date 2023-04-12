@@ -1,3 +1,4 @@
+# based on https://github.com/flywheel-apps/bids-fmriprep/blob/main/utils/bids/run_level.py
 
 #!/usr/bin/env python3
 """Determine level at which the gear is running."""
@@ -21,15 +22,15 @@ def get_analysis_run_level_and_hierarchy(gtk_context_client, destination_id):
     """
 
     hierarchy = {
-        "run_label": "unknown",
         "group": None,
         "project_label": None,
         "subject_label": None,
         "session_label": None,
     }
 
+    run_level = 'session'
     destination = gtk_context_client.get(destination_id)
-    if destination.container_type == "session":
+    if destination.container_type == run_level:
 
         hierarchy["group"] = destination.parents["group"]
 
@@ -37,8 +38,6 @@ def get_analysis_run_level_and_hierarchy(gtk_context_client, destination_id):
             if destination.parents[level]:
                 container = gtk_context_client.get(destination.parents[level])
                 hierarchy[f"{level}_label"] = container.label
-                if hierarchy["run_level"] == level:
-                    hierarchy["run_label"] = container.label
     else:
         log.error("The destination_id must reference a valid session container.")
 
