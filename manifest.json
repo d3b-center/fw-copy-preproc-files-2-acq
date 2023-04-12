@@ -1,19 +1,42 @@
 {
-  "name": "d3b-copy-proc-2-acq",
-  "label": "Copy analysis files to the session.",
-  "description": "This tool copies files ouput by the D3b-Ped-Processing-Pipeline gear to an acquisition container and renames them to include subject and session labels.",
-  "author": "Ariana Familiar",
-  "maintainer": "D3b-TIRU <flywheel@d3b.center>",
-  "source": "https://github.com/d3b-center/fw-copy-proc-2-acq", 
-  "version": "0.0.0",
-  "license": "Apache-2.0",
+  "author": "D3b-TIRU",
+  "command": "poetry run python run.py",
+  "config": {
+    "debug": {
+      "default": false,
+      "description": "Log debug messages",
+      "type": "boolean"
+    }
+  },
   "custom": {
-    "gear-builder": {
-      "category": "utility",
-      "image": "chop.flywheel.io/d3b-copy-proc-2-acq:0.0.0"
-    },
     "flywheel": {
       "suite": "D3b-TIRU"
+    },
+    "gear-builder": {
+      "category": "utility",
+      "image": "chop.flywheel.io/d3b-copy-proc-2-acq:0.0.0-1"
     }
-  }
+  },
+  "environment": {
+    "PATH": "/opt/poetry/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "PYTHON_VERSION": "3.9.7",
+    "PIP_NO_CACHE_DIR": "0",
+    "POETRY_HOME": "/opt/poetry",
+    "POETRY_VERSION": "1.1.11",
+    "POETRY_VIRTUALENVS_CREATE": "false",
+    "FLYWHEEL": "/flywheel/v0"
+  },
+  "inputs": {
+    "api-key": {
+      "base": "api-key",
+      "read-only": true
+    }
+  },
+  "label": "Copy analysis files to the session.",
+  "description": "This tool copies files ouput by the D3b-Ped-Processing-Pipeline gear to an acquisition container and renames them to include subject and session labels.",
+  "license": "Apache-2.0",
+  "maintainer": "D3b-TIRU <flywheel@d3b.center>",
+  "name": "d3b-copy-proc-2-acq",
+  "source": "https://github.com/d3b-center/fw-copy-proc-2-acq", 
+  "version": "0.0.0-1"
 }

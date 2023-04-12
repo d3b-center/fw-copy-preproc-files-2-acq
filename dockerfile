@@ -1,25 +1,20 @@
-# Creates docker container
-#       original source:
-#           https://github.com/scitran-apps/fsl-bet/blob/master/Dockerfile
-#
+FROM python:3.9.7-slim-buster
 
-#############################################
-# Select the OS
-FROM python:3.8-slim as base
-
-#############################################
-# Install necessary packages
-RUN pip install flywheel-sdk
-# flywheel-gear-toolkit
-
-#############################################
-# Setup default flywheel/v0 directory
 ENV FLYWHEEL="/flywheel/v0"
 WORKDIR ${FLYWHEEL}
-COPY run.py $FLYWHEEL/
-COPY manifest.json $FLYWHEEL/
+RUN pip install poetry
 
-#############################################
+# Install main deps
+COPY pyproject.toml poetry.lock $FLYWHEEL/
+RUN poetry install --no-dev --no-root
+
+COPY run.py manifest.json README.md $FLYWHEEL/
+COPY fw_gear_copy_files_2_acq ${FLYWHEEL}/fw_gear_copy_files_2_acq 
+
+# Installing the current project (most likely to change, above install is cached)
+RUN poetry install --no-dev
+
 # Configure entrypoint
 RUN chmod a+x $FLYWHEEL/run.py
-ENTRYPOINT ["python","/flywheel/v0/run.py"]
+ENTRYPOINT ["poetry","run","python","/flywheel/v0/run.py"]
+
