@@ -55,6 +55,14 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
                     out_fname = f'{sub_label}_{ses_label}_pred_tumorSegmentation.nii.gz'
                 elif 'brainMask_SRI' == base_fname:
                     out_fname = f'{sub_label}_{ses_label}_pred_brainMask.nii.gz'
+                elif 'T1_to_SRI_ss' == base_fname:
+                    out_fname = f'{sub_label}_{ses_label}_T1_SRI_ss.nii.gz'
+                elif 'T1CE_to_SRI_ss' == base_fname:
+                    out_fname = f'{sub_label}_{ses_label}_T1CE_SRI_ss.nii.gz'
+                elif 'T2_to_SRI_ss' == base_fname:
+                    out_fname = f'{sub_label}_{ses_label}_T2_SRI_ss.nii.gz'
+                elif 'FL_to_SRI_ss' == base_fname:
+                    out_fname = f'{sub_label}_{ses_label}_FL_SRI_ss.nii.gz'
                 elif 'z_T1_to_SRI_ss' == base_fname:
                     out_fname = f'{sub_label}_{ses_label}_T1_SRI_norm_ss.nii.gz'
                 elif 'z_T1CE_to_SRI_ss' == base_fname:
