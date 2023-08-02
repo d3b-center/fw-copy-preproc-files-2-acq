@@ -37,6 +37,11 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
     if not match:
         gear_name = 'd3b-ped-proc-pipeline-batch'
         match = get_matching_analysis(ses, gear_name)
+    # make sure session label is only age-in-days
+    if len(ses_label.split('d_')) > 1:
+        ses_string = ses_label.split('d_')[0]
+    else
+        ses_string = ses_label
     # if we have a matching gear, rename & copy the files to the acquisition container
     if match:
         match = match.reload()
@@ -47,33 +52,33 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
                 base_fname = fname.split('.nii.gz')[0] # get the file name without the extension
                 # define the output file name
                 if 'T1CE_to_SRI' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T1CE_to_SRI.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T1CE_to_SRI.nii.gz'
                 elif 'T1_to_SRI' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T1_to_SRI.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T1_to_SRI.nii.gz'
                 elif 'T2_to_SRI' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T2_to_SRI.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T2_to_SRI.nii.gz'
                 elif 'FL_to_SRI' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_FL_to_SRI.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_FL_to_SRI.nii.gz'
                 elif 'brainTumorSegmentation_SRI' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_pred_tumorSegmentation.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_pred_tumorSegmentation.nii.gz'
                 elif 'brainMask_SRI' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_pred_brainMask.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_pred_brainMask.nii.gz'
                 elif 'T1_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T1_SRI_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T1_SRI_ss.nii.gz'
                 elif 'T1CE_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T1CE_SRI_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T1CE_SRI_ss.nii.gz'
                 elif 'T2_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T2_SRI_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T2_SRI_ss.nii.gz'
                 elif 'FL_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_FL_SRI_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_FL_SRI_ss.nii.gz'
                 elif 'z_T1_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T1_SRI_norm_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T1_SRI_norm_ss.nii.gz'
                 elif 'z_T1CE_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T1CE_SRI_norm_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T1CE_SRI_norm_ss.nii.gz'
                 elif 'z_T2_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_T2_SRI_norm_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_T2_SRI_norm_ss.nii.gz'
                 elif 'z_FL_to_SRI_ss' == base_fname:
-                    out_fname = f'{sub_label}_{ses_label}_FL_SRI_norm_ss.nii.gz'
+                    out_fname = f'{sub_label}_{ses_string}_FL_SRI_norm_ss.nii.gz'
                 else:
                     out_fname == []
                 # if we have the output file name, upload file to the acquisition
