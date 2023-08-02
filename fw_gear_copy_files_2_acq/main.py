@@ -32,8 +32,11 @@ def run(client: CoreClient, gtk_context: GearToolkitContext):
     # now look for the analysis gear to grab files from (within the same session)
     ses = fw.lookup(f'{group_name}/{project_label}/{sub_label}/{ses_label}')
     ses = ses.reload()
-    gear_name = 'd3b-ped-proc-pipeline-batch'
+    gear_name = 'd3b-ped-proc-pipeline'
     match = get_matching_analysis(ses, gear_name)
+    if not match:
+        gear_name = 'd3b-ped-proc-pipeline-batch'
+        match = get_matching_analysis(ses, gear_name)
     # if we have a matching gear, rename & copy the files to the acquisition container
     if match:
         match = match.reload()
